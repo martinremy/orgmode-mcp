@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "orgmode-mcp": {
+      "command": "node",
+      "args": ["dist/index.js"],
+      "cwd": "{{PROJECT_ROOT}}"
+    }
+  }
+}
