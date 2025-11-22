@@ -10,7 +10,7 @@ import { z } from 'zod';
 // Import tool implementations
 import { createExampleTool } from '../tools/example.js';
 
-export function setupToolHandlers(server: Server): void {
+export function setupToolHandlers(server: Server, orgFilePaths: string[]): void {
   // List available tools
   server.setRequestHandler(ListToolsRequestSchema, async () => {
     return {

@@ -6,7 +6,7 @@ import {
   McpError,
 } from '@modelcontextprotocol/sdk/types.js';
 
-export function setupResourceHandlers(server: Server): void {
+export function setupResourceHandlers(server: Server, orgFilePaths: string[]): void {
   // List available resources
   server.setRequestHandler(ListResourcesRequestSchema, async () => {
     return {
