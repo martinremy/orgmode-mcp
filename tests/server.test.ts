@@ -4,9 +4,10 @@ import { createServer } from '../src/server';
 
 describe('MCP Server', () => {
   let server: Server;
+  const mockOrgFiles = ['/tmp/test.org'];
 
   beforeEach(() => {
-    server = createServer();
+    server = createServer(mockOrgFiles);
   });
 
   it('should create a server instance', () => {

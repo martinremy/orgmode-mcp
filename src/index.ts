@@ -2,9 +2,19 @@
 
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { createServer } from './server.js';
+import { validateAndLoadConfig } from './config.js';
 
 async function main() {
-  const server = createServer();
+  // Load and validate configuration
+  let orgFilePaths: string[];
+  try {
+    orgFilePaths = validateAndLoadConfig();
+  } catch (error) {
+    console.error('Failed to load configuration:', (error as Error).message);
+    process.exit(1);
+  }
+
+  const server = createServer(orgFilePaths);
   const transport = new StdioServerTransport();
   await server.connect(transport);
   

@@ -11,7 +11,7 @@ import {
 import { setupToolHandlers } from './handlers/tools.js';
 import { setupResourceHandlers } from './handlers/resources.js';
 
-export function createServer(): Server {
+export function createServer(orgFilePaths: string[]): Server {
   const server = new Server(
     {
       name: 'orgmode-mcp',
@@ -26,8 +26,8 @@ export function createServer(): Server {
   );
 
   // Set up handlers
-  setupToolHandlers(server);
-  setupResourceHandlers(server);
+  setupToolHandlers(server, orgFilePaths);
+  setupResourceHandlers(server, orgFilePaths);
 
   // Error handling
   server.onerror = (error) => {

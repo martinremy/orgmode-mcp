@@ -9,6 +9,7 @@ An MCP (Model Context Protocol) server for working with Org Mode files and workf
 - 📡 Standard stdio transport for MCP communication
 - 🎯 Ready for integration with Claude Desktop
 - 🛠️ Development-friendly with hot reloading
+- 📁 Configurable org-mode file paths with wildcard support
 
 ## Quick Start
 
@@ -29,6 +30,25 @@ An MCP (Model Context Protocol) server for working with Org Mode files and workf
    ```bash
    npm run build
    ```
+
+4. Create a `config.json` file in the project root:
+   ```json
+   {
+     "orgFiles": [
+       "/path/to/your/org/files/*.org",
+       "/path/to/specific-file.org",
+       "~/Documents/notes/**/*.org"
+     ]
+   }
+   ```
+
+   The `orgFiles` array supports:
+   - Absolute file paths: `/Users/username/notes/work.org`
+   - Wildcard patterns: `/Users/username/notes/*.org`
+   - Recursive patterns: `/Users/username/notes/**/*.org`
+   - Prefix matching: `/Users/username/notes/life*.org`
+
+   See the [Configuration](#configuration) section for more details.
 
 ### Running the Server
 
@@ -55,12 +75,78 @@ Then send a JSON-RPC message like:
 {"jsonrpc": "2.0", "id": 1, "method": "tools/list", "params": {}}
 ```
 
+## Configuration
+
+The server requires a `config.json` file in the project root directory to specify which org-mode files to process.
+
+### Configuration File Format
+
+```json
+{
+  "orgFiles": [
+    "/absolute/path/to/file.org",
+    "/path/to/directory/*.org",
+    "/path/with/wildcard/life*.org"
+  ]
+}
+```
+
+### Supported Path Patterns
+
+- **Absolute paths**: `/Users/username/notes/work.org`
+- **Wildcard patterns**:
+  - `*.org` - All .org files in a directory
+  - `**/*.org` - All .org files recursively
+  - `life*.org` - Files starting with "life"
+- **Multiple patterns**: List multiple paths and patterns in the array
+
+### Validation
+
+When the server starts, it will:
+- Validate the configuration file structure
+- Expand all glob patterns to find matching files
+- Report errors if:
+  - The config file is missing or invalid JSON
+  - The `orgFiles` array is empty or missing
+  - No files match the specified patterns
+- Display warnings if:
+  - Individual patterns match no files
+  - Pattern expansion encounters errors
+
+### Example Configurations
+
+**Simple configuration:**
+```json
+{
+  "orgFiles": ["/Users/martin/notes/work.org"]
+}
+```
+
+**Multiple files with wildcards:**
+```json
+{
+  "orgFiles": [
+    "/Users/martin/Dropbox/orgmode/work.org",
+    "/Users/martin/Dropbox/orgmode/life*.org",
+    "/tmp/scratch.org"
+  ]
+}
+```
+
+**Recursive pattern:**
+```json
+{
+  "orgFiles": ["/Users/martin/Documents/**/*.org"]
+}
+```
+
 ## Project Structure
 
 ```
 src/
 ├── index.ts          # Main entry point
-├── server.ts         # Server setup and configuration  
+├── server.ts         # Server setup and configuration
+├── config.ts         # Configuration loader and validator
 ├── handlers/         # Request handlers
 │   ├── tools.ts      # Tool request handlers
 │   └── resources.ts  # Resource request handlers
@@ -76,7 +162,9 @@ src/
 - `npm run start` - Run the compiled server
 - `npm run dev` - Run with TypeScript and hot reloading
 - `npm run clean` - Clean build artifacts
-- `npm test` - Run tests (placeholder)
+- `npm test` - Run tests
+- `npm run test:watch` - Run tests in watch mode
+- `npm run test:coverage` - Run tests with coverage report
 
 ## Integration with Claude Desktop
 
@@ -86,13 +174,26 @@ See [docs/claude-integration.md](./docs/claude-integration.md) for detailed inst
 
 See [docs/development.md](./docs/development.md) for guidelines on extending the server with new tools and resources.
 
-## Environment Variables
+### Testing
 
-Copy `.env.example` to `.env` and modify as needed:
+The project includes comprehensive tests for all modules:
 
 ```bash
-cp .env.example .env
+# Run all tests
+npm test
+
+# Run tests in watch mode
+npm run test:watch
+
+# Generate coverage report
+npm run test:coverage
 ```
+
+Tests are located in the `tests/` directory and cover:
+- Configuration loading and validation (tests/config.test.ts)
+- Server initialization (tests/server.test.ts)
+- Request handlers (tests/handlers.test.ts)
+- Tool implementations (tests/tools.test.ts)
 
 ## License
 
