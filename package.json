@@ -15,16 +15,31 @@
     "start": "node dist/index.js",
     "dev": "tsx src/index.ts",
     "clean": "rm -rf dist",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
     "generate-config": "./scripts/generate-mcp-config.sh",
     "prepublishOnly": "npm run clean && npm run build"
   },
-  "keywords": ["mcp", "model-context-protocol", "claude", "ai", "server", "org-mode", "orgmode", "emacs"],
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "claude",
+    "ai",
+    "server",
+    "org-mode",
+    "orgmode",
+    "emacs"
+  ],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
+    "@jest/globals": "^30.2.0",
+    "@types/jest": "^30.0.0",
     "@types/node": "^24.9.1",
+    "jest": "^30.2.0",
+    "ts-jest": "^29.4.5",
     "tsx": "^4.20.6",
     "typescript": "^5.9.3"
   },
