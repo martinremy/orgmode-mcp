@@ -6,9 +6,11 @@ import { validateAndLoadConfig } from './config.js';
 
 async function main() {
   // Load and validate configuration
+  // Support CONFIG_PATH environment variable for flexible deployment
+  const configPath = process.env.CONFIG_PATH || './config.json';
   let orgFilePaths: string[];
   try {
-    orgFilePaths = validateAndLoadConfig();
+    orgFilePaths = validateAndLoadConfig(configPath);
   } catch (error) {
     console.error('Failed to load configuration:', (error as Error).message);
     process.exit(1);

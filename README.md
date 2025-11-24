@@ -180,7 +180,29 @@ src/
 
 ## Integration with Claude Desktop
 
-See [docs/claude-integration.md](./docs/claude-integration.md) for detailed instructions on how to configure Claude Desktop to use this MCP server.
+Add this configuration to your Claude Desktop config file (usually at `~/Library/Application Support/Claude/claude_desktop_config.json` on macOS):
+
+```json
+{
+  "mcpServers": {
+    "orgmode-mcp": {
+      "command": "node",
+      "args": ["/absolute/path/to/orgmode-mcp/dist/index.js"],
+      "env": {
+        "CONFIG_PATH": "/absolute/path/to/orgmode-mcp/config.json"
+      }
+    }
+  }
+}
+```
+
+Replace `/absolute/path/to/orgmode-mcp` with the actual path to your installation.
+
+**Important**: The `CONFIG_PATH` environment variable must point to the absolute path of your `config.json` file.
+
+After adding the configuration, restart Claude Desktop. The server will expose your org-mode files as MCP resources that can be accessed through Claude.
+
+See [docs/claude-integration.md](./docs/claude-integration.md) for more detailed instructions.
 
 ## Development
 
@@ -206,7 +228,3 @@ Tests are located in the `tests/` directory and cover:
 - Server initialization (tests/server.test.ts)
 - Request handlers (tests/handlers.test.ts)
 - Tool implementations (tests/tools.test.ts)
-
-## License
-
-ISC
