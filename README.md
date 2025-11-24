@@ -31,7 +31,12 @@ An MCP (Model Context Protocol) server for working with Org Mode files and workf
    npm run build
    ```
 
-4. Create a `config.json` file in the project root:
+4. Configure your org-mode files:
+   ```bash
+   cp config-example.json config.json
+   ```
+
+   Then edit `config.json` to specify the paths to your org-mode files:
    ```json
    {
      "orgFiles": [
@@ -47,6 +52,7 @@ An MCP (Model Context Protocol) server for working with Org Mode files and workf
    - Wildcard patterns: `/Users/username/notes/*.org`
    - Recursive patterns: `/Users/username/notes/**/*.org`
    - Prefix matching: `/Users/username/notes/life*.org`
+   - Tilde expansion: `~/Documents/notes/*.org`
 
    See the [Configuration](#configuration) section for more details.
 
@@ -79,6 +85,11 @@ Then send a JSON-RPC message like:
 
 The server requires a `config.json` file in the project root directory to specify which org-mode files to process.
 
+**Setup**: Copy `config-example.json` to `config.json` and update the paths to point to your org-mode files:
+```bash
+cp config-example.json config.json
+```
+
 ### Configuration File Format
 
 ```json
@@ -86,7 +97,8 @@ The server requires a `config.json` file in the project root directory to specif
   "orgFiles": [
     "/absolute/path/to/file.org",
     "/path/to/directory/*.org",
-    "/path/with/wildcard/life*.org"
+    "/path/with/wildcard/life*.org",
+    "~/Documents/notes/*.org"
   ]
 }
 ```
