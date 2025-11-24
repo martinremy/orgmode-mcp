@@ -37,16 +37,16 @@ Claude Desktop uses a configuration file to define MCP servers. The configuratio
    ```json
    {
      "mcpServers": {
-       "mcp-server-local": {
+       "orgmode-mcp": {
          "command": "node",
          "args": ["dist/index.js"],
-         "cwd": "/Users/mremy/devhome/github/orgmode-mcp"
+         "cwd": "/absolute/path/to/orgmode-mcp"
        }
      }
    }
    ```
 
-   **Important:** Update the `cwd` path to match your actual project location.
+   **Important:** Replace `/absolute/path/to/orgmode-mcp` with your actual project location.
 
 4. **If you have other MCP servers, add this one to the existing configuration:**
    ```json
@@ -59,7 +59,7 @@ Claude Desktop uses a configuration file to define MCP servers. The configuratio
        "orgmode-mcp": {
          "command": "node",
          "args": ["dist/index.js"],
-         "cwd": "/Users/mremy/devhome/github/orgmode-mcp"
+         "cwd": "/absolute/path/to/orgmode-mcp"
        }
      }
    }
@@ -89,10 +89,10 @@ Claude Desktop uses a configuration file to define MCP servers. The configuratio
 ```json
 {
   "mcpServers": {
-    "mcp-server-local": {
+    "orgmode-mcp": {
       "command": "node",
       "args": ["dist/index.js"],
-      "cwd": "/Users/mremy/devhome/github/mcp-server-local"
+      "cwd": "/absolute/path/to/orgmode-mcp"
     }
   }
 }
@@ -102,13 +102,13 @@ Claude Desktop uses a configuration file to define MCP servers. The configuratio
 ```json
 {
   "mcpServers": {
-    "mcp-server-local": {
+    "orgmode-mcp": {
       "command": "node",
       "args": ["dist/index.js"],
-      "cwd": "/Users/mremy/devhome/github/mcp-server-local",
+      "cwd": "/absolute/path/to/orgmode-mcp",
       "env": {
         "DEBUG": "true",
-        "MCP_SERVER_NAME": "my-local-server"
+        "CONFIG_PATH": "/absolute/path/to/orgmode-mcp/config.json"
       }
     }
   }
@@ -121,10 +121,10 @@ For development, you can configure Claude Desktop to run your server directly fr
 ```json
 {
   "mcpServers": {
-    "mcp-server-local-dev": {
+    "orgmode-mcp-dev": {
       "command": "npx",
       "args": ["tsx", "src/index.ts"],
-      "cwd": "/Users/mremy/devhome/github/mcp-server-local"
+      "cwd": "/absolute/path/to/orgmode-mcp"
     }
   }
 }
@@ -157,7 +157,7 @@ For development, you can configure Claude Desktop to run your server directly fr
 
 1. **Test server manually:**
    ```bash
-   cd /Users/mremy/devhome/github/mcp-server-local
+   cd /absolute/path/to/orgmode-mcp
    npm run build
    echo '{"jsonrpc": "2.0", "id": 1, "method": "tools/list", "params": {}}' | npm start
    ```

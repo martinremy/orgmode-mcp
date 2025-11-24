@@ -159,6 +159,32 @@ async function getMyResourceData(): Promise<any> {
 
 ## Development Workflow
 
+### Working with Conductor Workspaces
+
+If you're using Conductor to manage parallel workspaces, each workspace maintains its own isolated environment:
+
+1. **Build the project** - Each workspace needs to be built independently:
+   ```bash
+   npm run build
+   ```
+   This creates the `dist/` directory with compiled JavaScript files.
+
+2. **Configure org files** - Create a `config.json` file in your workspace:
+   ```bash
+   cp config-example.json config.json
+   ```
+   Edit `config.json` to specify your org file paths or use the sample files:
+   ```json
+   {
+     "orgFiles": ["sample-org-files/*.org"]
+   }
+   ```
+
+3. **Testing in Conductor** - When Claude Desktop connects to your MCP server through Conductor, ensure:
+   - The `dist/` directory exists and is up-to-date
+   - The `config.json` file is properly configured
+   - All paths in `config.json` are relative to the workspace root or absolute paths
+
 ### 1. Setup Development Environment
 
 ```bash
@@ -167,6 +193,12 @@ npm install
 
 # Create environment file
 cp .env.example .env
+
+# Create config file
+cp config-example.json config.json
+
+# Build the project (required before running)
+npm run build
 
 # Start development server
 npm run dev
@@ -207,10 +239,10 @@ Configure Claude Desktop to use your development server:
 ```json
 {
   "mcpServers": {
-    "mcp-server-local-dev": {
+    "orgmode-mcp-dev": {
       "command": "npx",
       "args": ["tsx", "src/index.ts"],
-      "cwd": "/Users/mremy/devhome/github/mcp-server-local"
+      "cwd": "/absolute/path/to/orgmode-mcp"
     }
   }
 }
