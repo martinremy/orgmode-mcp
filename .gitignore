@@ -68,6 +68,9 @@ jspm_packages/
 # Generated MCP configuration (user-specific)
 mcp.json
 
+# User-specific configuration
+config.json
+
 # parcel-bundler cache
 .cache
 .parcel-cache
