@@ -124,10 +124,10 @@ export function loadConfig(configPath: string = './config.json'): ConfigValidati
 export function validateAndLoadConfig(configPath?: string): string[] {
   const result = loadConfig(configPath);
 
-  // Log warnings
+  // Log warnings to stderr (stdout is reserved for MCP protocol)
   if (result.warnings.length > 0) {
-    console.warn('Configuration warnings:');
-    result.warnings.forEach(warning => console.warn(`  ⚠️  ${warning}`));
+    console.error('Configuration warnings:');
+    result.warnings.forEach(warning => console.error(`  ⚠️  ${warning}`));
   }
 
   // Handle errors
@@ -137,10 +137,10 @@ export function validateAndLoadConfig(configPath?: string): string[] {
     throw new Error('Invalid configuration. Please check config.json');
   }
 
-  // Log success
-  console.log(`✅ Configuration loaded successfully`);
-  console.log(`   Found ${result.expandedPaths!.length} org file(s):`);
-  result.expandedPaths!.forEach(path => console.log(`   - ${path}`));
+  // Log success to stderr (stdout is reserved for MCP protocol)
+  console.error(`✅ Configuration loaded successfully`);
+  console.error(`   Found ${result.expandedPaths!.length} org file(s):`);
+  result.expandedPaths!.forEach(path => console.error(`   - ${path}`));
 
   return result.expandedPaths!;
 }
