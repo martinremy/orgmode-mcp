@@ -1,7 +1,5 @@
 {
-    "orgFiles": [
-        "/path/to/orgmode/files/work*.org",
-        "/path/to/orgmode/files/life*.org",
-        "~/tmp/scratch.org"
+  "orgFiles": [
+    "/Users/mremy/devhome/github/orgmode-mcp/.conductor/olympia/sample-org-files/*.org"
   ]
 }

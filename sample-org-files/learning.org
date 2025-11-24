@@ -1,0 +1,66 @@
+#+TITLE: Learning & Development
+#+CATEGORY: learning
+#+FILETAGS: :learning:
+
+* Technical Skills
+** NEXT Complete Rust ownership chapter exercises :rust:programming:
+   SCHEDULED: <2025-11-24 Sun 14:00>
+   :PROPERTIES:
+   :COURSE: The Rust Programming Language
+   :PROGRESS: 60%
+   :END:
+
+** TODO Read "Designing Data-Intensive Applications" chapter 5 :reading:systems:
+   :PROPERTIES:
+   :BOOK: Designing Data-Intensive Applications
+   :AUTHOR: Martin Kleppmann
+   :PAGES_READ: 120/560
+   :END:
+
+** TODO Practice LeetCode algorithm problems :algorithms:
+   SCHEDULED: <2025-11-25 Mon 20:00>
+   Goal: 3 problems per week
+
+** DONE Watch conference talk on WebAssembly
+   CLOSED: [2025-11-23 Sat 10:30]
+
+* Soft Skills
+** TODO Listen to podcast on leadership :management:podcast:
+   SCHEDULED: <2025-11-26 Tue>
+   Episode: "Building High-Performance Teams"
+
+** TODO Read article on effective communication :communication:
+   Bookmarked last week.
+
+** NEXT Practice presentation for upcoming tech talk :public-speaking:
+   DEADLINE: <2025-11-30 Sat>
+   :PROPERTIES:
+   :TOPIC: MCP Servers in Practice
+   :DURATION: 30min
+   :END:
+
+* Languages
+** TODO Duolingo Spanish lesson :spanish:language:
+   SCHEDULED: <2025-11-24 Sun>
+   :PROPERTIES:
+   :HABIT: daily
+   :STREAK: 45
+   :END:
+
+** TODO Review German vocabulary flashcards :german:language:
+   SCHEDULED: <2025-11-25 Mon>
+
+* Creative
+** MAYBE Learn to play guitar
+** TODO Watch YouTube tutorial on watercolor painting :art:
+   SCHEDULED: <2025-11-27 Wed>
+
+* Professional Development
+** TODO Update resume with recent projects :career:
+   DEADLINE: <2025-12-01 Sun>
+
+** NEXT Research certifications for cloud architecture :career:certification:
+   Looking into AWS Solutions Architect
+
+** TODO Write blog post about MCP server development :writing:tech:
+   Share learnings from this project.

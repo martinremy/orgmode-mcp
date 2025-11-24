@@ -20,6 +20,20 @@ export interface ResourceContext {
   params?: Record<string, unknown>;
 }
 
+// Org-mode file metadata
+export interface OrgFileMetadata {
+  filePath: string;
+  fileName: string;
+  category?: string;
+  fileTags: string[];
+  title?: string;
+}
+
+export interface OrgFileContent {
+  metadata: OrgFileMetadata;
+  content: string;
+}
+
 // Add more custom types as needed
 export type ToolHandler = (context: ToolExecutionContext) => Promise<string>;
 export type ResourceProvider = (context: ResourceContext) => Promise<string>;

@@ -1,0 +1,68 @@
+#+TITLE: Active Projects
+#+CATEGORY: work
+#+FILETAGS: :projects:
+
+* Active Projects
+** Project Alpha - Mobile App Redesign :client:mobile:
+   :PROPERTIES:
+   :PROJECT_START: [2025-11-01 Fri]
+   :PROJECT_DEADLINE: [2025-12-31 Tue]
+   :STATUS: active
+   :TEAM: Design, Frontend
+   :END:
+
+*** NEXT Design user onboarding flow
+    SCHEDULED: <2025-11-24 Sun>
+    :PROPERTIES:
+    :ASSIGNED: Sarah
+    :END:
+
+*** TODO Implement new navigation component
+    SCHEDULED: <2025-11-26 Tue>
+    :PROPERTIES:
+    :ASSIGNED: Mike
+    :END:
+
+*** DONE User research interviews
+    CLOSED: [2025-11-20 Wed 16:00]
+
+** Project Beta - API Gateway Migration :infrastructure:backend:
+   :PROPERTIES:
+   :PROJECT_START: [2025-10-15 Tue]
+   :PROJECT_DEADLINE: [2025-11-30 Sat]
+   :STATUS: active
+   :TEAM: Backend, DevOps
+   :END:
+
+*** NEXT Load testing on staging :testing:
+    DEADLINE: <2025-11-25 Mon>
+    :PROPERTIES:
+    :ASSIGNED: Martin
+    :PRIORITY: A
+    :END:
+
+*** TODO Update API documentation
+    SCHEDULED: <2025-11-27 Wed>
+
+*** DONE Migrate authentication endpoints
+    CLOSED: [2025-11-22 Fri 11:30]
+
+* On Hold
+** Project Gamma - Analytics Dashboard :analytics:
+   :PROPERTIES:
+   :PROJECT_START: [2025-09-01 Sun]
+   :STATUS: hold
+   :REASON: Waiting for data team resources
+   :END:
+
+*** TODO Define metrics and KPIs
+*** TODO Design dashboard layout
+
+* Completed Projects
+** DONE Project Delta - Email Service Upgrade
+   CLOSED: [2025-11-15 Fri]
+   :PROPERTIES:
+   :PROJECT_START: [2025-10-01 Tue]
+   :PROJECT_END: [2025-11-15 Fri]
+   :STATUS: complete
+   :END:

@@ -1,0 +1,47 @@
+#+TITLE: Work Projects
+#+CATEGORY: work
+#+FILETAGS: :work:
+
+* Software Development
+** NEXT Implement MCP server for org-mode :mcp:urgent:
+   SCHEDULED: <2025-11-24 Sun>
+   :PROPERTIES:
+   :EFFORT: 8h
+   :END:
+
+   Need to design the resource/tool structure.
+
+*** TODO Create sample org files for testing
+    DEADLINE: <2025-11-24 Sun>
+*** TODO Implement resource handlers
+    SCHEDULED: <2025-11-25 Mon>
+*** DONE Review MCP SDK documentation
+    CLOSED: [2025-11-23 Sat 14:30]
+
+** TODO Fix bug in authentication module :bug:
+   DEADLINE: <2025-11-26 Tue>
+   :PROPERTIES:
+   :PRIORITY: A
+   :END:
+
+   Users reporting timeout issues.
+
+** WAITING Code review for PR #42 :review:
+   Waiting on feedback from team.
+
+* Client Projects
+** TODO Prepare Q4 report for Acme Corp :client:
+   DEADLINE: <2025-11-30 Sat>
+   :PROPERTIES:
+   :CLIENT: Acme Corp
+   :BILLABLE: 4h
+   :END:
+
+** NEXT Update dashboard mockups :design:
+   SCHEDULED: <2025-11-25 Mon>
+
+* Administration
+** TODO Submit expense report :admin:
+   DEADLINE: <2025-11-27 Wed>
+** TODO Review team performance docs :admin:management:
+   SCHEDULED: <2025-12-01 Sun>

@@ -1,0 +1,50 @@
+#+TITLE: People & Relationships
+#+CATEGORY: people
+#+FILETAGS: :people:
+
+* Family
+** TODO Call mom about holiday plans :family:
+   SCHEDULED: <2025-11-24 Sun>
+   :PROPERTIES:
+   :PHONE: 555-0123
+   :END:
+
+** NEXT Plan anniversary dinner with Sarah :family:
+   DEADLINE: <2025-12-15 Sun>
+   Need to make reservations at her favorite restaurant.
+
+** TODO Send birthday card to nephew :family:
+   DEADLINE: <2025-11-28 Thu>
+
+* Friends
+** TODO Catch up with Alex over coffee :friends:
+   SCHEDULED: <2025-11-26 Tue>
+   Haven't talked in a while, want to hear about his new job.
+
+** NEXT Reply to Emma's email :friends:
+   Been meaning to respond about the hiking trip idea.
+
+** WAITING Hear back from the book club about December meeting :friends:
+
+* Professional Network
+** TODO Schedule 1-on-1 with new team member Jessica :work:team:
+   SCHEDULED: <2025-11-25 Mon 14:00>
+   :PROPERTIES:
+   :MEETING_TYPE: onboarding
+   :END:
+
+** TODO Send LinkedIn recommendation for former colleague :networking:
+   DEADLINE: <2025-11-30 Sat>
+
+** NEXT Follow up with conference contact from last month :networking:
+   Met at DevCon, interested in collaboration.
+
+* Mentoring
+** TODO Review mentee's portfolio project :mentoring:
+   SCHEDULED: <2025-11-27 Wed>
+   :PROPERTIES:
+   :MENTEE: Jordan
+   :END:
+
+** TODO Prepare agenda for next mentoring session :mentoring:
+   SCHEDULED: <2025-11-29 Fri>
