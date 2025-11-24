@@ -1,0 +1,44 @@
+#+TITLE: Personal Life
+#+CATEGORY: life
+#+FILETAGS: :personal:
+
+* Health & Fitness
+** NEXT Go for morning run :exercise:
+   SCHEDULED: <2025-11-24 Sun 07:00>
+   :PROPERTIES:
+   :HABIT: daily
+   :END:
+
+** TODO Schedule dentist appointment :health:
+   DEADLINE: <2025-11-30 Sat>
+
+** TODO Meal prep for the week :cooking:
+   SCHEDULED: <2025-11-24 Sun>
+
+* Home & Family
+** TODO Fix leaky faucet in bathroom :home:maintenance:
+   :PROPERTIES:
+   :COST: 50
+   :END:
+
+** NEXT Plan anniversary dinner :family:
+   DEADLINE: <2025-12-15 Sun>
+   Need to make reservations soon!
+
+** TODO Call mom :family:
+   SCHEDULED: <2025-11-24 Sun>
+
+* Learning & Development
+** TODO Read "Designing Data-Intensive Applications" chapter 5 :reading:tech:
+   :PROPERTIES:
+   :BOOK: Designing Data-Intensive Applications
+   :PAGES: 50
+   :END:
+
+** NEXT Complete online course module on Rust :learning:
+   SCHEDULED: <2025-11-25 Mon 19:00>
+
+* Someday/Maybe
+** MAYBE Learn piano
+** MAYBE Visit Japan
+** MAYBE Write a blog post about MCP
