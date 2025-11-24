@@ -5,21 +5,76 @@ import {
   ErrorCode,
   McpError,
 } from '@modelcontextprotocol/sdk/types.js';
+import {
+  parseOrgFiles,
+  filterByCategory,
+  filterByFileTag,
+  getUniqueCategories,
+  getFileTagsForCategory,
+} from '../utils/orgParser.js';
+import { OrgFileContent } from '../types/index.js';
+
+// Cache for parsed org files
+let orgFilesCache: OrgFileContent[] | null = null;
 
 export function setupResourceHandlers(server: Server, orgFilePaths: string[]): void {
+  // Initialize cache on first request
+  async function getOrgFiles(): Promise<OrgFileContent[]> {
+    if (!orgFilesCache) {
+      orgFilesCache = await parseOrgFiles(orgFilePaths);
+    }
+    return orgFilesCache;
+  }
+
   // List available resources
   server.setRequestHandler(ListResourcesRequestSchema, async () => {
-    return {
-      resources: [
-        {
-          uri: 'local://example',
-          name: 'Example Resource',
-          description: 'An example resource provided by the MCP server',
+    const orgFiles = await getOrgFiles();
+    const categories = getUniqueCategories(orgFiles);
+    const resources = [];
+
+    // Add org://all resource
+    resources.push({
+      uri: 'org://all',
+      name: 'All Org Files',
+      description: 'All org-mode files combined',
+      mimeType: 'text/plain',
+    });
+
+    // Add individual file resources
+    for (const file of orgFiles) {
+      resources.push({
+        uri: `org://file/${file.metadata.fileName}`,
+        name: file.metadata.title || file.metadata.fileName,
+        description: `Org file: ${file.metadata.fileName}`,
+        mimeType: 'text/plain',
+      });
+    }
+
+    // Add category resources
+    for (const category of categories) {
+      const categoryFiles = filterByCategory(orgFiles, category);
+      const fileTags = getFileTagsForCategory(orgFiles, category);
+
+      resources.push({
+        uri: `org://category/${category}`,
+        name: `Category: ${category}`,
+        description: `All files in category '${category}' (${categoryFiles.length} file${categoryFiles.length !== 1 ? 's' : ''})`,
+        mimeType: 'text/plain',
+      });
+
+      // Add category + filetag resources
+      for (const fileTag of fileTags) {
+        const taggedFiles = filterByFileTag(categoryFiles, fileTag);
+        resources.push({
+          uri: `org://category/${category}/filetag/${fileTag}`,
+          name: `Category: ${category}, Tag: ${fileTag}`,
+          description: `Files in category '${category}' with filetag '${fileTag}' (${taggedFiles.length} file${taggedFiles.length !== 1 ? 's' : ''})`,
           mimeType: 'text/plain',
-        },
-        // Add more resources here as you implement them
-      ],
-    };
+        });
+      }
+    }
+
+    return { resources };
   });
 
   // Handle resource read requests
@@ -27,25 +82,123 @@ export function setupResourceHandlers(server: Server, orgFilePaths: string[]): v
     const { uri } = request.params;
 
     try {
-      switch (uri) {
-        case 'local://example': {
-          return {
-            contents: [
-              {
-                uri,
-                mimeType: 'text/plain',
-                text: 'This is an example resource content from the MCP server.',
-              },
-            ],
-          };
-        }
+      const orgFiles = await getOrgFiles();
 
-        default:
+      // Handle org://all
+      if (uri === 'org://all') {
+        const combinedContent = orgFiles
+          .map(file => {
+            return `# File: ${file.metadata.fileName}\n# Path: ${file.metadata.filePath}\n\n${file.content}\n`;
+          })
+          .join('\n---\n\n');
+
+        return {
+          contents: [
+            {
+              uri,
+              mimeType: 'text/plain',
+              text: combinedContent,
+            },
+          ],
+        };
+      }
+
+      // Handle org://file/{filename}
+      const fileMatch = uri.match(/^org:\/\/file\/(.+)$/);
+      if (fileMatch) {
+        const fileName = fileMatch[1];
+        const file = orgFiles.find(f => f.metadata.fileName === fileName);
+
+        if (!file) {
           throw new McpError(
             ErrorCode.InvalidRequest,
-            `Unknown resource: ${uri}`
+            `File not found: ${fileName}`
           );
+        }
+
+        return {
+          contents: [
+            {
+              uri,
+              mimeType: 'text/plain',
+              text: file.content,
+            },
+          ],
+        };
       }
+
+      // Handle org://category/{category}/filetag/{tag}
+      const categoryFileTagMatch = uri.match(/^org:\/\/category\/([^/]+)\/filetag\/(.+)$/);
+      if (categoryFileTagMatch) {
+        const category = categoryFileTagMatch[1];
+        const fileTag = categoryFileTagMatch[2];
+        if (!category || !fileTag) {
+          throw new McpError(ErrorCode.InvalidRequest, 'Invalid category or filetag in URI');
+        }
+        const categoryFiles = filterByCategory(orgFiles, category);
+        const filteredFiles = filterByFileTag(categoryFiles, fileTag);
+
+        if (filteredFiles.length === 0) {
+          throw new McpError(
+            ErrorCode.InvalidRequest,
+            `No files found for category '${category}' with filetag '${fileTag}'`
+          );
+        }
+
+        const combinedContent = filteredFiles
+          .map(file => {
+            return `# File: ${file.metadata.fileName}\n# Path: ${file.metadata.filePath}\n\n${file.content}\n`;
+          })
+          .join('\n---\n\n');
+
+        return {
+          contents: [
+            {
+              uri,
+              mimeType: 'text/plain',
+              text: combinedContent,
+            },
+          ],
+        };
+      }
+
+      // Handle org://category/{category}
+      const categoryMatch = uri.match(/^org:\/\/category\/(.+)$/);
+      if (categoryMatch) {
+        const category = categoryMatch[1];
+        if (!category) {
+          throw new McpError(ErrorCode.InvalidRequest, 'Invalid category in URI');
+        }
+        const filteredFiles = filterByCategory(orgFiles, category);
+
+        if (filteredFiles.length === 0) {
+          throw new McpError(
+            ErrorCode.InvalidRequest,
+            `No files found for category: ${category}`
+          );
+        }
+
+        const combinedContent = filteredFiles
+          .map(file => {
+            return `# File: ${file.metadata.fileName}\n# Path: ${file.metadata.filePath}\n\n${file.content}\n`;
+          })
+          .join('\n---\n\n');
+
+        return {
+          contents: [
+            {
+              uri,
+              mimeType: 'text/plain',
+              text: combinedContent,
+            },
+          ],
+        };
+      }
+
+      throw new McpError(
+        ErrorCode.InvalidRequest,
+        `Unknown resource URI format: ${uri}`
+      );
     } catch (error) {
       if (error instanceof McpError) {
         throw error;
