@@ -10,6 +10,7 @@ import {
 
 import { setupToolHandlers } from './handlers/tools.js';
 import { setupResourceHandlers } from './handlers/resources.js';
+import { setupPromptHandlers } from './handlers/prompts.js';
 
 export function createServer(orgFilePaths: string[]): Server {
   const server = new Server(
@@ -21,6 +22,7 @@ export function createServer(orgFilePaths: string[]): Server {
       capabilities: {
         tools: {},
         resources: {},
+        prompts: {},
       },
     }
   );
@@ -28,6 +30,7 @@ export function createServer(orgFilePaths: string[]): Server {
   // Set up handlers
   setupToolHandlers(server, orgFilePaths);
   setupResourceHandlers(server, orgFilePaths);
+  setupPromptHandlers(server, orgFilePaths);
 
   // Error handling
   server.onerror = (error) => {
