@@ -9,23 +9,11 @@ import {
   parseOrgFiles,
   getUniqueCategories,
 } from '../utils/orgParser.js';
-import { OrgFileContent } from '../types/index.js';
-
-// Cache for parsed org files
-let orgFilesCache: OrgFileContent[] | null = null;
 
 export function setupPromptHandlers(server: Server, orgFilePaths: string[]): void {
-  // Initialize cache on first request
-  async function getOrgFiles(): Promise<OrgFileContent[]> {
-    if (!orgFilesCache) {
-      orgFilesCache = await parseOrgFiles(orgFilePaths);
-    }
-    return orgFilesCache;
-  }
-
   // List available prompts
   server.setRequestHandler(ListPromptsRequestSchema, async () => {
-    const orgFiles = await getOrgFiles();
+    const orgFiles = await parseOrgFiles(orgFilePaths);
     const categories = getUniqueCategories(orgFiles);
 
     return {
@@ -68,7 +56,7 @@ export function setupPromptHandlers(server: Server, orgFilePaths: string[]): voi
     const { name, arguments: args } = request.params;
 
     try {
-      const orgFiles = await getOrgFiles();
+      const orgFiles = await parseOrgFiles(orgFilePaths);
 
       switch (name) {
         case 'review-due-items': {
