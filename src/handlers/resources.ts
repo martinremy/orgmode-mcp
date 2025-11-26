@@ -12,23 +12,11 @@ import {
   getUniqueCategories,
   getFileTagsForCategory,
 } from '../utils/orgParser.js';
-import { OrgFileContent } from '../types/index.js';
-
-// Cache for parsed org files
-let orgFilesCache: OrgFileContent[] | null = null;
 
 export function setupResourceHandlers(server: Server, orgFilePaths: string[]): void {
-  // Initialize cache on first request
-  async function getOrgFiles(): Promise<OrgFileContent[]> {
-    if (!orgFilesCache) {
-      orgFilesCache = await parseOrgFiles(orgFilePaths);
-    }
-    return orgFilesCache;
-  }
-
   // List available resources
   server.setRequestHandler(ListResourcesRequestSchema, async () => {
-    const orgFiles = await getOrgFiles();
+    const orgFiles = await parseOrgFiles(orgFilePaths);
     const categories = getUniqueCategories(orgFiles);
     const resources = [];
 
@@ -82,7 +70,7 @@ export function setupResourceHandlers(server: Server, orgFilePaths: string[]): v
     const { uri } = request.params;
 
     try {
-      const orgFiles = await getOrgFiles();
+      const orgFiles = await parseOrgFiles(orgFilePaths);
 
       // Handle org://all
       if (uri === 'org://all') {
