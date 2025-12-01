@@ -17,6 +17,7 @@ export function createServer(orgFilePaths: string[]): Server {
     {
       name: 'orgmode-mcp',
       version: '1.0.0',
+      description: 'Provides access to Org Mode files for task management, note-taking, and structured data. Use this server to read, search, and analyze org-mode tasks, schedules, and hierarchical outlines.',
     },
     {
       capabilities: {
