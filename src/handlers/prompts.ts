@@ -8,6 +8,7 @@ import {
 import {
   parseOrgFiles,
   getUniqueCategories,
+  filterByCategory,
 } from '../utils/orgParser.js';
 
 export function setupPromptHandlers(server: Server, orgFilePaths: string[]): void {
@@ -89,6 +90,21 @@ export function setupPromptHandlers(server: Server, orgFilePaths: string[]): voi
               ? 'overdue'
               : 'all';
 
+          // Get the actual org file content for the category
+          const filteredFiles = filterByCategory(orgFiles, category);
+          if (filteredFiles.length === 0) {
+            throw new McpError(
+              ErrorCode.InvalidParams,
+              `No files found for category: ${category}`
+            );
+          }
+
+          const combinedContent = filteredFiles
+            .map(file => {
+              return `# File: ${file.metadata.fileName}\n# Path: ${file.metadata.filePath}\n\n${file.content}\n`;
+            })
+            .join('\n---\n\n');
+
           return {
             messages: [
               {
@@ -105,6 +121,7 @@ export function setupPromptHandlers(server: Server, orgFilePaths: string[]): voi
                   resource: {
                     uri: `org://category/${category}`,
                     mimeType: 'text/plain',
+                    text: combinedContent,
                   },
                 },
               },
@@ -129,6 +146,21 @@ export function setupPromptHandlers(server: Server, orgFilePaths: string[]): voi
             );
           }
 
+          // Get the actual org file content for the category
+          const filteredFiles = filterByCategory(orgFiles, category);
+          if (filteredFiles.length === 0) {
+            throw new McpError(
+              ErrorCode.InvalidParams,
+              `No files found for category: ${category}`
+            );
+          }
+
+          const combinedContent = filteredFiles
+            .map(file => {
+              return `# File: ${file.metadata.fileName}\n# Path: ${file.metadata.filePath}\n\n${file.content}\n`;
+            })
+            .join('\n---\n\n');
+
           return {
             messages: [
               {
@@ -145,6 +177,7 @@ export function setupPromptHandlers(server: Server, orgFilePaths: string[]): voi
                   resource: {
                     uri: `org://category/${category}`,
                     mimeType: 'text/plain',
+                    text: combinedContent,
                   },
                 },
               },
