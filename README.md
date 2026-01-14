@@ -5,8 +5,8 @@ An MCP (Model Context Protocol) server for working with Org Mode files and workf
 ## Features
 
 - ✨ TypeScript-based MCP server implementation
-- 🔧 Extensible tool and resource system
-- 📡 Standard stdio transport for MCP communication
+- 🔧 Six intuitive tools for discovering and accessing org files
+- 📡 Resources and prompts for advanced MCP client features
 - 🎯 Ready for integration with Claude Desktop
 - 🛠️ Development-friendly with hot reloading
 - 📁 Configurable org-mode file paths with wildcard support
@@ -160,11 +160,11 @@ src/
 ├── server.ts         # Server setup and configuration
 ├── config.ts         # Configuration loader and validator
 ├── handlers/         # Request handlers
-│   ├── tools.ts      # Tool request handlers
-│   └── resources.ts  # Resource request handlers
-├── tools/            # Tool implementations
-│   └── example.ts    # Example tool
-├── resources/        # Resource providers
+│   ├── tools.ts      # Tool request handlers (6 org-mode tools)
+│   ├── resources.ts  # Resource request handlers
+│   └── prompts.ts    # Prompt request handlers
+├── utils/            # Utility functions
+│   └── orgParser.ts  # Org-mode file parsing utilities
 └── types/            # TypeScript type definitions
 ```
 
@@ -203,6 +203,22 @@ Replace `/absolute/path/to/orgmode-mcp` with the actual path to your installatio
 After adding the configuration, restart Claude Desktop. The server will expose your org-mode files as MCP resources that can be accessed through Claude.
 
 See [docs/claude-integration.md](./docs/claude-integration.md) for more detailed instructions.
+
+## Available Tools
+
+The server provides six tools for working with org-mode files:
+
+### Discovery Tools
+- `list_org_files` - Get metadata for all org files (filename, path, category, title, filetags)
+- `list_categories` - Get all categories with file counts and associated filetags
+
+### Content Retrieval Tools
+- `get_all_org_files` - Get all org files combined into a single document
+- `get_org_file` - Get a specific org file by filename
+- `get_category` - Get all files in a category
+- `get_category_with_tag` - Get files in a category filtered by filetag
+
+These tools mirror the existing resource structure, providing compatibility with MCP clients that prefer tools over resources.
 
 ## Development
 
